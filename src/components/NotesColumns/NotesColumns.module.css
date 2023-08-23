@@ -1,0 +1,8 @@
+.columns {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 100%;
+    overflow-x: auto;
+}

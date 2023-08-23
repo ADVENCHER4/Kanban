@@ -1,0 +1,7 @@
+.columnStatus {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 5px;
+    margin-bottom: 5px;
+}

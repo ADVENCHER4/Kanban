@@ -1,0 +1,13 @@
+.button {
+    font-family: inherit;
+    height: 30px;
+    /*min-width: 20px;*/
+    max-width: 200px;
+    border: lightgray solid 3px;
+    border-radius: 10px;
+    background-color: lightgray;
+}
+
+.button:hover {
+    background: transparent;
+}

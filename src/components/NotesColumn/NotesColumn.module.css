@@ -1,0 +1,13 @@
+.column {
+    min-width: 250px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.columnContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
