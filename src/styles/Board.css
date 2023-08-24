@@ -10,11 +10,6 @@ nav {
     font-size: 26px;
 }
 
-.divider {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
 form {
     width: 100%;
     display: flex;

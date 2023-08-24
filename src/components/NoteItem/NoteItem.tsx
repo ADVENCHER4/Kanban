@@ -4,9 +4,7 @@ import {INote} from "../../types";
 import Status from "../UI/Status/Status";
 import Button from "../UI/Button/Button";
 import {useAppDispatch} from "../../hooks/reduxHooks";
-import {removeNote} from "../../store/Slices/notesSlice";
-import {setDraggingCard} from "../../store/Slices/draggingCardSlice";
-import {setEditingNote} from "../../store/Slices/editingNoteSlice";
+import {removeNote, setDraggingCard, setEditingNote} from "../../store/Slices/notesSlice";
 import {setEditingNoteWindowVisibility} from "../../store/Slices/modalsSlice";
 
 const NoteItem: FC<INote> = ({id, title, status, content}) => {

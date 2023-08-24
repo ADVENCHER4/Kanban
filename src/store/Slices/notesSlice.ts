@@ -4,18 +4,22 @@ import {db} from "../../firebase";
 import {collection, deleteDoc, doc, getDocs, setDoc, updateDoc} from "firebase/firestore";
 import {Dispatch} from "../index";
 import {UserState} from "./userSlice";
-
-const boardId = 0;
+import {BoardsState} from "./boardsSlice";
+import {emptyNote} from "../../utils/constants";
 
 export const fetchNotes = createAsyncThunk<INote[], null, {
     rejectWithValue: string,
-    state: { user: UserState }
+    state: {
+        user: UserState,
+        boards: BoardsState
+    }
 }>
 (
     'notes/fetchNotes',
     async (_, {rejectWithValue, getState}) => {
         try {
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             const querySnapshot = await getDocs(collection(db, `users/${user.id}/boards/${boardId}/notes`));
             const fetchedNotes: INote[] = []
             querySnapshot.forEach((doc) => {
@@ -30,7 +34,10 @@ export const fetchNotes = createAsyncThunk<INote[], null, {
 export const pushNote = createAsyncThunk<undefined, INote, {
     rejectWithValue: string,
     dispatch: Dispatch,
-    state: { user: UserState }
+    state: {
+        user: UserState,
+        boards: BoardsState
+    }
 }>
 (
     'notes/pushNote',
@@ -38,16 +45,23 @@ export const pushNote = createAsyncThunk<undefined, INote, {
         try {
             dispatch(createNote(note))
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             await setDoc(doc(db, `users/${user.id}/boards/${boardId}/notes`, `${note.id}`), note);
         } catch (e: any) {
             return rejectWithValue(e.message)
         }
     }
 )
-export const updateNoteStatus = createAsyncThunk<undefined, { id: number, newStatus: IStatus }, {
+export const updateNoteStatus = createAsyncThunk<undefined, {
+    id: number,
+    newStatus: IStatus
+}, {
     rejectWithValue: string,
     dispatch: Dispatch,
-    state: { user: UserState }
+    state: {
+        user: UserState,
+        boards: BoardsState
+    }
 }>
 (
     'notes/updateNoteStatus',
@@ -55,10 +69,10 @@ export const updateNoteStatus = createAsyncThunk<undefined, { id: number, newSta
         try {
             dispatch(changeNoteStatus({id, newStatus}))
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             await updateDoc(doc(db, `users/${user.id}/boards/${boardId}/notes/${id}`), {
                 status: newStatus
             });
-
         } catch (e: any) {
             return rejectWithValue(e.message)
         }
@@ -68,7 +82,10 @@ export const updateNoteStatus = createAsyncThunk<undefined, { id: number, newSta
 export const updateNote = createAsyncThunk<undefined, INote, {
     rejectWithValue: string,
     dispatch: Dispatch,
-    state: { user: UserState }
+    state: {
+        user: UserState,
+        boards: BoardsState
+    }
 }>
 (
     'notes/updateNote',
@@ -76,6 +93,7 @@ export const updateNote = createAsyncThunk<undefined, INote, {
         try {
             dispatch(editNote(note))
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             await updateDoc(doc(db, `users/${user.id}/boards/${boardId}/notes/${note.id}`), {
                 title: note.title,
                 content: note.content
@@ -89,7 +107,10 @@ export const updateNote = createAsyncThunk<undefined, INote, {
 export const removeNote = createAsyncThunk<undefined, number, {
     rejectWithValue: string,
     dispatch: Dispatch,
-    state: { user: UserState }
+    state: {
+        user: UserState,
+        boards: BoardsState
+    }
 }>
 (
     'notes/removeNote',
@@ -97,8 +118,8 @@ export const removeNote = createAsyncThunk<undefined, number, {
         try {
             dispatch(deleteNote(id))
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             await deleteDoc(doc(db, `users/${user.id}/boards/${boardId}/notes/${id}`));
-
         } catch (e: any) {
             return rejectWithValue(e.message)
         }
@@ -108,7 +129,11 @@ export const removeNote = createAsyncThunk<undefined, number, {
 export const removeNotesByStatus = createAsyncThunk<undefined, IStatus, {
     rejectWithValue: string,
     dispatch: Dispatch,
-    state: { user: UserState, notes: NotesState }
+    state: {
+        user: UserState,
+        notes: NotesState,
+        boards: BoardsState
+    }
 }>
 (
     'notes/removeNotesByStatus',
@@ -116,6 +141,7 @@ export const removeNotesByStatus = createAsyncThunk<undefined, IStatus, {
         try {
             const user = getState().user.user;
             const notes = getState().notes.notes;
+            const boardId = getState().boards.currentBoard?.id;
             for (let i = 0; i < notes.length; i++) {
                 const note = notes[i]
                 if (note.status === status) {
@@ -131,10 +157,14 @@ export const removeNotesByStatus = createAsyncThunk<undefined, IStatus, {
 
 interface NotesState extends IFetchable {
     notes: INote[];
+    draggingNote: INote;
+    editingNote: INote;
 }
 
 const initialState: NotesState = {
     notes: [],
+    draggingNote: emptyNote,
+    editingNote: emptyNote,
     isPending: true,
 };
 const notesSlice = createSlice({
@@ -144,7 +174,10 @@ const notesSlice = createSlice({
         createNote(state, action: PayloadAction<INote>) {
             state.notes.push(action.payload);
         },
-        changeNoteStatus(state, action: PayloadAction<{ id: number, newStatus: IStatus }>) {
+        changeNoteStatus(state, action: PayloadAction<{
+            id: number,
+            newStatus: IStatus
+        }>) {
             state.notes.forEach((n: INote) => {
                 if (n.id === action.payload.id) {
                     n.status = action.payload.newStatus;
@@ -161,6 +194,12 @@ const notesSlice = createSlice({
         deleteNote(state, action: PayloadAction<number>) {
             state.notes = state.notes.filter((n: INote) => n.id !== action.payload)
         },
+        setDraggingCard(state, action: PayloadAction<INote>) {
+            state.draggingNote = action.payload;
+        },
+        setEditingNote(state, action: PayloadAction<INote>) {
+            state.editingNote = action.payload;
+        }
     },
     extraReducers: builder => {
         builder.addCase(fetchNotes.pending,
@@ -180,4 +219,5 @@ const notesSlice = createSlice({
 });
 
 const {createNote, changeNoteStatus, deleteNote, editNote} = notesSlice.actions;
+export const {setDraggingCard, setEditingNote} = notesSlice.actions
 export default notesSlice.reducer;

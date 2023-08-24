@@ -22,5 +22,10 @@ export interface IFetchable {
     error?: string;
 }
 
+export interface IBoard {
+    id: number;
+    name: string;
+}
+
 
 

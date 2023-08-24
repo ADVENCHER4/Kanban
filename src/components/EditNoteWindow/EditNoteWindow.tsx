@@ -4,12 +4,11 @@ import NoteForm from "../UI/NoteForm/NoteForm";
 import {INote} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
 import {setEditingNoteWindowVisibility} from "../../store/Slices/modalsSlice";
-import {updateNote} from "../../store/Slices/notesSlice";
-import {setEditingNote} from "../../store/Slices/editingNoteSlice";
+import {setEditingNote, updateNote} from "../../store/Slices/notesSlice";
 
 const EditNoteWindow: FC = () => {
     const dispatch = useAppDispatch()
-    const editingNote = useAppSelector(state => state.editingCard.note)
+    const editingNote = useAppSelector(state => state.notes.editingNote)
     const isVisible = useAppSelector(state => state.modals.editingNoteModal)
 
     const setNote = (note: INote) => {

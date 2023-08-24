@@ -1,4 +1,4 @@
-import {INote, IStatus, IUser} from "../types";
+import {IBoard, INote, IStatus, IUser} from "../types";
 
 export const emptyUser: IUser = {
     id: '',
@@ -16,6 +16,11 @@ export const emptyNote: INote = {
     title: '',
     status: emptyStatus,
     content: ''
+}
+
+export const emptyBoard: IBoard = {
+    id: 0,
+    name: ''
 }
 
 export const defaultStatuses: IStatus[] = [

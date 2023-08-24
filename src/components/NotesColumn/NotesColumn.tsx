@@ -14,14 +14,14 @@ interface NotesColumnProps {
 }
 
 const NotesColumn: FC<NotesColumnProps> = ({status, setNewNoteStatus}) => {
+    const draggingNote = useAppSelector(state => state.notes.draggingNote)
     const dispatch = useAppDispatch()
-    const draggingCard = useAppSelector(state => state.draggingCard.note)
     const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
     }
     const dropHandler = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        dispatch(updateNoteStatus({id: draggingCard.id, newStatus: status}))
+        dispatch(updateNoteStatus({id: draggingNote.id, newStatus: status}))
     }
 
     return (

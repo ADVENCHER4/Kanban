@@ -5,22 +5,31 @@ import {UserState} from "./userSlice";
 import {collection, deleteDoc, doc, getDocs, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {Dispatch} from "../index";
+import {BoardsState} from "./boardsSlice";
 
-const boardId = 0
 export const fetchStatuses = createAsyncThunk<IStatus[], null, {
     rejectWithValue: string,
-    state: { user: UserState }
+    state: { user: UserState, boards: BoardsState }
 }>
 (
     'statuses/fetchStatuses',
     async (_, {rejectWithValue, getState}) => {
         try {
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             const querySnapshot = await getDocs(collection(db, `users/${user.id}/boards/${boardId}/statuses`));
-            const fetchedStatuses: IStatus[] = []
-            querySnapshot.forEach((doc) => {
-                fetchedStatuses.push(doc.data() as IStatus);
-            })
+            let fetchedStatuses: IStatus[] = []
+            if (querySnapshot.empty) {
+                fetchedStatuses = defaultStatuses;
+                for (let i = 0; i < defaultStatuses.length; i++) {
+                    const status = defaultStatuses[i]
+                    await setDoc(doc(db, `users/${user.id}/boards/${boardId}/statuses`, `${status.id}`), status);
+                }
+            } else {
+                querySnapshot.forEach((doc) => {
+                    fetchedStatuses.push(doc.data() as IStatus);
+                })
+            }
             return fetchedStatuses;
         } catch (e: any) {
             return rejectWithValue(e.message)
@@ -30,14 +39,15 @@ export const fetchStatuses = createAsyncThunk<IStatus[], null, {
 export const pushStatus = createAsyncThunk<undefined, IStatus, {
     rejectWithValue: string,
     dispatch: Dispatch,
-    state: { user: UserState }
+    state: { user: UserState, boards: BoardsState }
 }>
 (
-    'notes/pushNote',
+    'statuses/pushStatus',
     async (status, {dispatch, rejectWithValue, getState}) => {
         try {
             dispatch(addStatus(status))
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             await setDoc(doc(db, `users/${user.id}/boards/${boardId}/statuses`, `${status.id}`), status);
         } catch (e: any) {
             return rejectWithValue(e.message)
@@ -48,14 +58,15 @@ export const pushStatus = createAsyncThunk<undefined, IStatus, {
 export const deleteStatus = createAsyncThunk<undefined, number, {
     rejectWithValue: string,
     dispatch: Dispatch,
-    state: { user: UserState }
+    state: { user: UserState, boards: BoardsState }
 }>
 (
-    'notes/removeNote',
+    'statuses/deleteStatus',
     async (id, {dispatch, rejectWithValue, getState}) => {
         try {
             dispatch(removeStatus(id))
             const user = getState().user.user;
+            const boardId = getState().boards.currentBoard?.id;
             await deleteDoc(doc(db, `users/${user.id}/boards/${boardId}/status/${id}`));
 
         } catch (e: any) {
@@ -69,7 +80,7 @@ interface StatusesState extends IFetchable {
 }
 
 const initialState: StatusesState = {
-    statuses: defaultStatuses,
+    statuses: [],
     isPending: true,
 };
 

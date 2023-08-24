@@ -12,10 +12,12 @@ import {useAuth} from "../hooks/useAuth";
 import {fetchNotes} from "../store/Slices/notesSlice";
 import {useAppDispatch, useAppSelector} from "../hooks/reduxHooks";
 import {fetchStatuses} from "../store/Slices/statusesSlice";
+import Divider from "../components/UI/Divider/Divider";
 
 const App: FC = () => {
     const [newStatus, setNewStatus] = useState<IStatus>(emptyStatus);
     const {signOut} = useAuth()
+    const {name} = useAppSelector(state => state.boards.currentBoard!)
     const dispatch = useAppDispatch()
     const isNotesPending = useAppSelector(state => state.notes.isPending)
     const isStatusesPending = useAppSelector(state => state.statuses.isPending)
@@ -27,10 +29,10 @@ const App: FC = () => {
     return (
         <Container>
             <nav>
-                <h2 className='board-title'>Notes</h2>
+                <h2 className='board-title'>{name}</h2>
                 <Button onClick={signOut}>Logout</Button>
             </nav>
-            <hr className='divider'/>
+            <Divider/>
             {isNotesPending || isStatusesPending ?
                 <h2>Loading...</h2>
                 :

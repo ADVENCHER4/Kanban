@@ -1,19 +1,17 @@
 import {configureStore} from "@reduxjs/toolkit";
 import noteReducer from './Slices/notesSlice'
-import draggingCardReducer from "./Slices/draggingCardSlice";
 import statusesReducer from './Slices/statusesSlice'
-import editingCardReducer from './Slices/editingNoteSlice';
 import modalsReducers from './Slices/modalsSlice'
 import userReducer from './Slices/userSlice'
+import boardsReducer from './Slices/boardsSlice'
 
 const store = configureStore({
     reducer: {
         notes: noteReducer,
-        draggingCard: draggingCardReducer,
         statuses: statusesReducer,
-        editingCard: editingCardReducer,
         modals: modalsReducers,
         user: userReducer,
+        boards: boardsReducer
     }
 });
 
