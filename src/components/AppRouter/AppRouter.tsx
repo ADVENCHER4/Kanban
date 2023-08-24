@@ -10,11 +10,11 @@ const AppRouter = () => {
     const router = createBrowserRouter([
         {
             path: '/',
-            element: <ProtectedRoute><Navigate to='/board'/></ProtectedRoute>,
+            element: <ProtectedRoute><Navigate to='/boards'/></ProtectedRoute>,
         },
         {
             path: '/boards',
-            element: <BoardsPage/>,
+            element: <ProtectedRoute><BoardsPage/></ProtectedRoute>,
         },
         {
             path: '/boards/:id',
