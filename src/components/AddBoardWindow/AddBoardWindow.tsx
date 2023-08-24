@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import Modal from "../UI/Modal/Modal";
 import Input from "../UI/Input/Input";
 import {IBoard} from "../../types";
-import {emptyBoard, emptyStatus} from "../../utils/constants";
+import {emptyBoard} from "../../utils/constants";
 import Button from "../UI/Button/Button";
 import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
 import {setCreateBoardWindowVisibility} from "../../store/Slices/modalsSlice";

@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IBoard, IFetchable} from "../../types";
 import {UserState} from "./userSlice";
-import {collection, deleteDoc, doc, getDocs, setDoc, updateDoc} from "firebase/firestore";
+import {collection, deleteDoc, doc, getDocs, setDoc} from "firebase/firestore";
 import {db} from "../../firebase";
 import {Dispatch} from "../index";
 
@@ -96,12 +96,6 @@ const boardsSlice = createSlice({
         removeBoard(state, action: PayloadAction<number>) {
             state.boards = state.boards.filter((b: IBoard) => b.id !== action.payload)
         },
-        editBoard(state, action: PayloadAction<IBoard>) {
-            const editingBoard = state.boards.find((board: IBoard) => board.id === action.payload.id);
-            if (editingBoard) {
-                editingBoard.name = action.payload.name;
-            }
-        },
         setCurrentBoard(state, action: PayloadAction<number>) {
             state.currentBoard = state.boards.find((b: IBoard) => b.id === action.payload)
         }
@@ -123,6 +117,6 @@ const boardsSlice = createSlice({
     }
 });
 
-const {addBoard, removeBoard, editBoard} = boardsSlice.actions;
+const {addBoard, removeBoard} = boardsSlice.actions;
 export const {setCurrentBoard} = boardsSlice.actions
 export default boardsSlice.reducer;

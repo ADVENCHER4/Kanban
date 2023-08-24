@@ -10,6 +10,7 @@ import {setEditingNoteWindowVisibility} from "../../store/Slices/modalsSlice";
 const NoteItem: FC<INote> = ({id, title, status, content}) => {
     const dispatch = useAppDispatch()
     const dragHandler = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
         dispatch(setDraggingCard({id, title, status, content}));
     }
     const clickHandler = () => {
