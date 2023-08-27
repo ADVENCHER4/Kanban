@@ -140,16 +140,17 @@ export const removeNotesByStatus = createAsyncThunk<undefined, IStatus, {
     async (status, {dispatch, rejectWithValue, getState}) => {
         try {
             const user = getState().user.user;
-            const notes = getState().notes.notes;
             const boardId = getState().boards.currentBoard?.id;
+            const notes = getState().notes.notes;
             for (let i = 0; i < notes.length; i++) {
                 const note = notes[i]
-                if (note.status === status) {
+                if (note.status.id === status.id) {
                     dispatch(deleteNote(note.id))
                     await deleteDoc(doc(db, `users/${user.id}/boards/${boardId}/notes/${note.id}`));
                 }
             }
         } catch (e: any) {
+            console.log(e)
             return rejectWithValue(e.message)
         }
     }

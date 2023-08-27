@@ -67,8 +67,7 @@ export const deleteStatus = createAsyncThunk<undefined, number, {
             dispatch(removeStatus(id))
             const user = getState().user.user;
             const boardId = getState().boards.currentBoard?.id;
-            await deleteDoc(doc(db, `users/${user.id}/boards/${boardId}/status/${id}`));
-
+            await deleteDoc(doc(db, `users/${user.id}/boards/${boardId}/statuses/${id}`));
         } catch (e: any) {
             return rejectWithValue(e.message)
         }
@@ -90,7 +89,7 @@ const statusesSlice = createSlice({
     reducers: {
         addStatus(state, action: PayloadAction<IStatus>) {
             const s = action.payload;
-            s.id = state.statuses.length;
+            s.id = Date.now();
             state.statuses.push(s);
         },
         removeStatus(state, action: PayloadAction<number>) {

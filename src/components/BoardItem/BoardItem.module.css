@@ -1,7 +1,18 @@
 .boardItem {
-    height: 30px;
-    border-bottom: 1px solid gray;
+    height: 70px;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary);
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: var(--text);
+
+    &:hover {
+        cursor: pointer;
+    }
+
 }

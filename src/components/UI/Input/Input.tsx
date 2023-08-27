@@ -3,7 +3,7 @@ import cl from './Input.module.css'
 
 const Input: FC<InputHTMLAttributes<HTMLInputElement>> = (props) => {
     return (
-        <input {...props} className={cl.input}/>
+        <input {...props} className={cl.input} autoComplete='off'/>
     );
 };
 

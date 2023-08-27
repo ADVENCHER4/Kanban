@@ -1,14 +1,14 @@
 import React, {FC} from 'react';
 import Container from "../components/Container/Container";
-import {Link} from "react-router-dom";
 import Login from "../components/Login/Login";
+import LinkButton from "../components/UI/LinkButton/LinkButton";
 
 const LoginPage: FC = () => {
     return (
         <Container>
             <h2>Sign in</h2>
             <Login/>
-            <span>Haven't account? <Link to='/register'>Register</Link></span>
+            <span>Haven't account? <LinkButton to='/register'>Register</LinkButton></span>
         </Container>
     );
 }

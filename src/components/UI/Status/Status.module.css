@@ -1,23 +1,14 @@
 .status {
     min-width: 90px;
-    width: 90px;
     height: 25px;
     border-radius: 10px;
     padding: 0 5px;
     display: flex;
     align-items: center;
-    /*временная мера*/
-    background: gray;
-}
-
-.red {
-    background: #ff8187;
-}
-
-.yellow {
-    background: #fff77d;
-}
-
-.green {
-    background: #98ff9b;
+    gap: 10px;
+    .indicator {
+        border-radius: 50%;
+        height: 20px;
+        width: 20px;
+    }
 }

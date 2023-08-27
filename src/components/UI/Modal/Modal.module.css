@@ -14,11 +14,13 @@
 }
 .modalContent {
     padding: 25px;
-    background: white;
-    border-radius: 15px;
-    min-width: 250px;
+    background: var(--secondary);
+    border-radius: 10px;
+    min-width: 300px;
+    min-height: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    box-sizing: border-box;
 }

@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import Container from "../components/Container/Container";
-import {Link} from "react-router-dom";
 import Register from "../components/Register/Register";
+import LinkButton from "../components/UI/LinkButton/LinkButton";
 
 const RegisterPage: FC = () => {
 
@@ -9,7 +9,7 @@ const RegisterPage: FC = () => {
         <Container>
             <h2>Register</h2>
             <Register/>
-            <span>Already have an account? <Link to='/login'>Sing in</Link></span>
+            <span>Already have an account? <LinkButton to='/login'>Sing in</LinkButton></span>
         </Container>
     );
 }

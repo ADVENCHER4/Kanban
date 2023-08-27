@@ -8,7 +8,8 @@ export interface StatusProps {
 
 const Status: FC<StatusProps> = ({status}) => {
     return (
-        <div className={cl.status} style={{background: status.color}}>
+        <div className={cl.status} >
+            <div style={{background: status.color}} className={cl.indicator}/>
             {status.status}
         </div>
     );

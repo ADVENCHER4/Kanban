@@ -7,6 +7,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
 import {updateNoteStatus} from "../../store/Slices/notesSlice";
 import {setCreateNoteWindowVisibility} from "../../store/Slices/modalsSlice";
 import ColumnStatus from "../ColumnStatus/ColumnStatus";
+import Column from "../UI/Column/Column";
 
 interface NotesColumnProps {
     status: IStatus;
@@ -25,9 +26,9 @@ const NotesColumn: FC<NotesColumnProps> = ({status, setNewNoteStatus}) => {
     }
 
     return (
-        <div className={cl.column} onDragOver={dragOverHandler} onDrop={(e) => dropHandler(e)}>
+        <Column onDragOver={dragOverHandler} onDrop={(e) => dropHandler(e)}>
             <ColumnStatus status={status}/>
-            <div className={cl.columnContent}>
+            <div className={cl.notes}>
                 <NoteList status={status}/>
                 <Button onClick={() => {
                     dispatch(setCreateNoteWindowVisibility(true))
@@ -35,7 +36,7 @@ const NotesColumn: FC<NotesColumnProps> = ({status, setNewNoteStatus}) => {
                 }
                 }>Add</Button>
             </div>
-        </div>
+        </Column>
     );
 };
 

@@ -2,10 +2,10 @@ import React, {FC} from 'react';
 import cl from './NoteItem.module.css'
 import {INote} from "../../types";
 import Status from "../UI/Status/Status";
-import Button from "../UI/Button/Button";
 import {useAppDispatch} from "../../hooks/reduxHooks";
 import {removeNote, setDraggingCard, setEditingNote} from "../../store/Slices/notesSlice";
 import {setEditingNoteWindowVisibility} from "../../store/Slices/modalsSlice";
+import IconButton from "../UI/IconButton/IconButton";
 
 const NoteItem: FC<INote> = ({id, title, status, content}) => {
     const dispatch = useAppDispatch()
@@ -30,7 +30,7 @@ const NoteItem: FC<INote> = ({id, title, status, content}) => {
                 </div>
                 <p className={cl.content}>{content}</p>
             </div>
-            <Button onClick={deleteHandler}>x</Button>
+            <IconButton onClick={deleteHandler}>x</IconButton>
         </div>
     );
 };

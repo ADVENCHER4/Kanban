@@ -8,7 +8,7 @@ export const emptyUser: IUser = {
 export const emptyStatus: IStatus = {
     id: 0,
     status: '',
-    color: ''
+    color: 'black'
 }
 
 export const emptyNote: INote = {

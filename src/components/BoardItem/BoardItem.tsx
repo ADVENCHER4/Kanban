@@ -1,23 +1,26 @@
 import React, {FC} from 'react';
 import {IBoard} from "../../types";
 import cl from './BoardItem.module.css'
-import {Link} from "react-router-dom";
-import Button from "../UI/Button/Button";
 import {useAppDispatch} from "../../hooks/reduxHooks";
 import {deleteBoard, setCurrentBoard} from "../../store/Slices/boardsSlice";
+import {useNavigate} from "react-router-dom";
+import IconButton from "../UI/IconButton/IconButton";
 
 const BoardItem: FC<IBoard> = ({id, name}) => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const clickHandler = () => {
         dispatch(setCurrentBoard(id))
+        navigate(`/boards/${id}`)
     }
-    const remove = () => {
+    const remove = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
         dispatch(deleteBoard(id))
     }
     return (
-        <div className={cl.boardItem}>
-            <Link to={`/boards/${id}`} onClick={clickHandler}>{name}</Link>
-            <Button onClick={remove}>x</Button>
+        <div className={cl.boardItem} onClick={clickHandler}>
+            <h3>{name}</h3>
+            <IconButton onClick={remove}>x</IconButton>
         </div>
     );
 };

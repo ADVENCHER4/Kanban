@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
-import {IBoard} from "../../types";
 import BoardItem from "../BoardItem/BoardItem";
 import cl from './BoardList.module.css'
-interface BoardsListProps {
-    boards: IBoard[];
-}
+import {useAppSelector} from "../../hooks/reduxHooks";
 
-const BoardList: FC<BoardsListProps> = ({boards}) => {
+
+const BoardList: FC = () => {
+    const boards = useAppSelector(state => state.boards.boards)
+
     return (
         <div className={cl.boardsList}>
             {

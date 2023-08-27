@@ -1,12 +1,12 @@
 .button {
     border: none;
     font-family: inherit;
-    color: white;
+    font-size: 18px;
+    color: var(--text);
     padding: 0 10px;
     height: 30px;
-    max-width: 200px;
-    border-radius: 25px;
-    background-color: var(--accent);
+    width: 30px;
+    background-color: transparent;
 }
 
 .button:hover {

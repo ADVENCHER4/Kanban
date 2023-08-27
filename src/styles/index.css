@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import "vars.css";
 
 body {
     font-family: Roboto;
+    background-color: var(--secondary);
+    color: var(--text);
+    margin: 0;
 }

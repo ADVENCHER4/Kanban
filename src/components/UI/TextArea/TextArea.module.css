@@ -1,21 +1,19 @@
-.input {
+.area {
     font-family: inherit;
     width: 80%;
-    height: 20px;
+    height: 70px;
     padding: 5px;
     background: transparent;
     border: var(--tertiary) 1px solid;
     border-radius: 10px;
     margin-bottom: 10px;
     color: var(--text);
+    resize: none;
     &:focus {
         outline: none;
     }
     &::placeholder {
         color: var(--tertiary);
     }
-    &[type='color'] {
-        height: 35px;
-        width: 30%;
-    }
+
 }

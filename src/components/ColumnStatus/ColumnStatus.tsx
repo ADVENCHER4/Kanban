@@ -2,10 +2,10 @@ import React, {FC} from 'react';
 import {IStatus} from "../../types";
 import cl from "./ColumnStatus.module.css";
 import Status from "../UI/Status/Status";
-import Button from "../UI/Button/Button";
 import {removeNotesByStatus} from "../../store/Slices/notesSlice";
 import {deleteStatus} from "../../store/Slices/statusesSlice";
 import {useAppDispatch} from "../../hooks/reduxHooks";
+import IconButton from "../UI/IconButton/IconButton";
 
 interface ColumnStatusProps {
     status: IStatus;
@@ -20,7 +20,7 @@ const ColumnStatus: FC<ColumnStatusProps> = ({status}) => {
     return (
         <div className={cl.columnStatus}>
             <Status status={status}/>
-            <Button onClick={deleteColumn}>x</Button>
+            <IconButton onClick={deleteColumn}>x</IconButton>
         </div>
     );
 };

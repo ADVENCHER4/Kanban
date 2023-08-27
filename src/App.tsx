@@ -4,10 +4,13 @@ import AppRouter from "./components/AppRouter/AppRouter";
 import {getAuth} from "firebase/auth";
 import {useAppDispatch} from "./hooks/reduxHooks";
 import {setUser} from "./store/Slices/userSlice";
+import Loader from "./components/UI/Loader/Loader";
+import Container from "./components/Container/Container";
 
 const App: FC = () => {
     const [isPendingAuth, setPendingAuth] = useState<boolean>(true)
     const dispatch = useAppDispatch()
+
     getAuth().onAuthStateChanged((user) => {
         if (user) {
             dispatch(setUser({
@@ -21,7 +24,13 @@ const App: FC = () => {
     })
     return (
         <>
-            {isPendingAuth ? <h1>Loading...</h1> : <AppRouter/>}
+            {
+                isPendingAuth ?
+                    <Container>
+                        <Loader/>
+                    </Container>
+                    : <AppRouter/>
+            }
         </>
     );
 };

@@ -1,0 +1,13 @@
+.button {
+    font-size: 18px;
+    color: var(--tertiary);
+    min-width: 250px;
+    background-color: #E8F0FB;
+    border: none;
+    border-radius: 10px;
+    box-sizing: border-box;
+    
+    &:hover {
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,7 @@
+.btn {
+    text-decoration: none;
+    color: var(--tertiary);
+    &:hover {
+        color: var(--text);
+    }
+}

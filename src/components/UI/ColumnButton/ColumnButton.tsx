@@ -1,8 +1,7 @@
 import React, {FC} from 'react';
-import cl from './Button.module.css'
+import cl from './ColumnButton.module.css';
 
-
-const Button: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> =
+const ColumnButton: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> =
     ({
          children,
          onClick,
@@ -15,4 +14,4 @@ const Button: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> =
         );
     };
 
-export default Button;
+export default ColumnButton;

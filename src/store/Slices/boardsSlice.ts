@@ -98,7 +98,7 @@ const boardsSlice = createSlice({
         },
         setCurrentBoard(state, action: PayloadAction<number>) {
             state.currentBoard = state.boards.find((b: IBoard) => b.id === action.payload)
-        }
+        },
     },
     extraReducers({addCase}) {
         addCase(fetchBoards.pending,

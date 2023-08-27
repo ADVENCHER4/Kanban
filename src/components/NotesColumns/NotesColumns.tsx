@@ -1,14 +1,15 @@
 import React, {FC} from 'react';
 import cl from './NotesColumns.module.css'
 import NotesColumn from "../NotesColumn/NotesColumn";
-import Button from "../UI/Button/Button";
 import {IStatus} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../hooks/reduxHooks";
 import {setAddStatusWindowVisibility} from "../../store/Slices/modalsSlice";
+import ColumnButton from "../UI/ColumnButton/ColumnButton";
 
 interface ColumnsProps {
     setNewNoteStatus: (status: IStatus) => void;
 }
+
 const NotesColumns: FC<ColumnsProps> = ({setNewNoteStatus}) => {
     const dispatch = useAppDispatch()
     const showAddStatusWindow = () => dispatch(setAddStatusWindowVisibility(true))
@@ -18,7 +19,7 @@ const NotesColumns: FC<ColumnsProps> = ({setNewNoteStatus}) => {
             {statuses.map(status =>
                 <NotesColumn status={status} setNewNoteStatus={setNewNoteStatus} key={status.id}/>
             )}
-            <Button onClick={showAddStatusWindow}>+</Button>
+            <ColumnButton onClick={showAddStatusWindow}>+</ColumnButton>
         </div>
     );
 };
