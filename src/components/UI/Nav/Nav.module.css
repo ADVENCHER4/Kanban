@@ -30,17 +30,18 @@
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
 
-        .burgerMenuContent {
-            padding-bottom: 15px;
-            background: var(--primary);
-            border-radius: 0 0 10px 10px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-evenly;
-            box-sizing: border-box;
-        }
+    }
+
+    .burgerMenuContent {
+        padding-bottom: 15px;
+        background: var(--primary);
+        border-radius: 0 0 10px 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        box-sizing: border-box;
     }
 
 
@@ -49,10 +50,10 @@
             display: none;
         }
         .burgerBtn {
-            display: initial;
+            display: inline;
         }
         .burgerMenu {
-            display: initial;
+            display: block;
         }
     }
 }
