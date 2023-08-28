@@ -13,7 +13,8 @@ const App: FC = () => {
 
     getAuth().onAuthStateChanged((user) => {
         if (user) {
-            dispatch(setUser({
+            dispatch(setUser(
+                {
                     name: user?.displayName!,
                     email: user?.email!,
                     id: user.uid
