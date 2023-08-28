@@ -10,6 +10,7 @@ const BoardItem: FC<IBoard> = ({id, name}) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const clickHandler = () => {
+        //todo: remove
         dispatch(setCurrentBoard(id))
         navigate(`/boards/${id}`)
     }

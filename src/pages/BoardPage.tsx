@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import AddNoteWindow from "../components/AddNoteWindow/AddNoteWindow";
 import {IStatus} from "../types";
 import {emptyStatus} from "../utils/constants";
@@ -12,35 +12,22 @@ import {fetchStatuses} from "../store/Slices/statusesSlice";
 import Nav from "../components/UI/Nav/Nav";
 import {useParams} from "react-router-dom";
 import Loader from "../components/UI/Loader/Loader";
+import {fetchBoards, setCurrentBoard} from "../store/Slices/boardsSlice";
+import {useBoard} from "../hooks/useBoard";
 
 const BoardPage: FC = () => {
     const id = Number(useParams<{ id: string }>().id)
-    const {name} = useAppSelector(state => state.boards.currentBoard!)
-    const boards = useAppSelector(state => state.boards.boards)
-    const dispatch = useAppDispatch()
     const isNotesPending = useAppSelector(state => state.notes.isPending)
     const isStatusesPending = useAppSelector(state => state.statuses.isPending)
+    const isBoardsPending = useAppSelector(state => state.boards.isPending)
     const [newStatus, setNewStatus] = useState<IStatus>(emptyStatus);
-
-    const checkExists = (): boolean => {
-        for (const board of boards) {
-            if (board.id === id)
-                return true;
-        }
-        return false;
-    }
-
-    useEffect(() => {
-        dispatch(fetchNotes(null))
-        dispatch(fetchStatuses(null))
-        // console.log(checkExists())
-        // console.log(board)
-    }, [])
+    const isShowLoader = isBoardsPending || isStatusesPending || isNotesPending
+    const {name} = useBoard(id)
     return (
         <>
             <Nav title={name}/>
             <Container>
-                {isNotesPending || isStatusesPending ?
+                {isShowLoader ?
                     <Loader/>
                     :
                     <>

@@ -12,9 +12,6 @@ import {fetchBoards} from "../store/Slices/boardsSlice";
 const BoardsPage: FC = () => {
     const isPending = useAppSelector(state => state.boards.isPending)
     const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(fetchBoards(null))
-    }, []);
     const createBoard = () => {
         dispatch(setCreateBoardWindowVisibility(true))
     }

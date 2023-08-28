@@ -6,6 +6,7 @@ import {useAppDispatch} from "./hooks/reduxHooks";
 import {setUser} from "./store/Slices/userSlice";
 import Loader from "./components/UI/Loader/Loader";
 import Container from "./components/Container/Container";
+import {fetchBoards} from "./store/Slices/boardsSlice";
 
 const App: FC = () => {
     const [isPendingAuth, setPendingAuth] = useState<boolean>(true)
@@ -20,6 +21,7 @@ const App: FC = () => {
                     id: user.uid
                 }
             ))
+            dispatch(fetchBoards(null))
         }
         setPendingAuth(false)
     })
